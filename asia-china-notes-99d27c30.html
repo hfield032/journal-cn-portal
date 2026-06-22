@@ -1,0 +1,258 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>日常对照 · leisu</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        body {
+            font-family: system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+            background: linear-gradient(145deg, #fce6d0 0%, #f7d5b8 30%, #f0c6a5 60%, #ebbc99 100%);
+            min-height: 100vh;
+            display: flex;
+            align-items: flex-start;
+            justify-content: center;
+            padding: 2rem 1rem;
+        }
+        .page-wrapper {
+            max-width: 960px;
+            width: 100%;
+            display: flex;
+            flex-direction: column;
+            gap: 1.6rem;
+        }
+
+        /* 主视觉卡片 */
+        .hero-card {
+            background: rgba(255, 250, 240, 0.85);
+            backdrop-filter: blur(2px);
+            border-radius: 40px;
+            padding: 2.8rem 2.5rem;
+            box-shadow: 0 12px 28px rgba(130, 70, 30, 0.10);
+            transition: box-shadow 0.2s ease;
+            border: 1px solid rgba(255, 235, 210, 0.5);
+        }
+        .hero-card h1 {
+            font-size: 2.6rem;
+            font-weight: 550;
+            letter-spacing: -0.02em;
+            line-height: 1.2;
+            color: #4a2e1b;
+            margin-bottom: 0.75rem;
+        }
+        .hero-card h1 span {
+            display: inline-block;
+            background: #dfb48c;
+            color: #2d1e12;
+            padding: 0 0.5rem;
+            border-radius: 12px;
+            font-weight: 550;
+        }
+        .hero-card p {
+            font-size: 1.1rem;
+            line-height: 1.7;
+            color: #3f2c1c;
+            max-width: 34em;
+            margin-top: 0.6rem;
+        }
+
+        /* 卡片网格 */
+        .card-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+        }
+        .info-card {
+            background: #ffffffec;
+            border-radius: 32px;
+            padding: 2rem 1.8rem;
+            box-shadow: 0 6px 14px rgba(110, 60, 28, 0.06);
+            display: flex;
+            flex-direction: column;
+            border: 1px solid rgba(255, 226, 196, 0.3);
+            transition: transform 0.1s ease, box-shadow 0.15s ease;
+        }
+        .info-card:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 12px 22px rgba(100, 55, 20, 0.08);
+        }
+        .info-card h2 {
+            font-size: 1.3rem;
+            font-weight: 540;
+            color: #3f291a;
+            margin-bottom: 0.7rem;
+            border-bottom: 2px solid #ebc6a4;
+            display: inline-block;
+            padding-bottom: 0.3rem;
+            letter-spacing: 0.01em;
+        }
+        .info-card p, .info-card li {
+            font-size: 0.95rem;
+            line-height: 1.65;
+            color: #3e2c1e;
+        }
+        .info-card ul {
+            list-style: none;
+            padding: 0;
+            margin-top: 0.4rem;
+        }
+        .info-card li {
+            padding: 0.4rem 0 0.4rem 1.2rem;
+            position: relative;
+        }
+        .info-card li::before {
+            content: "·";
+            position: absolute;
+            left: 0.1rem;
+            color: #b4835b;
+            font-weight: 600;
+            font-size: 1.2rem;
+        }
+
+        /* 自然链接段落卡片 */
+        .link-note {
+            background: #fffbf5;
+            border-radius: 32px;
+            padding: 2rem 2.2rem;
+            box-shadow: 0 6px 14px rgba(100, 55, 24, 0.05);
+            border: 1px solid #f5dcc6;
+        }
+        .link-note p {
+            font-size: 1rem;
+            line-height: 1.8;
+            color: #39291c;
+            margin-bottom: 0.5rem;
+        }
+        .link-note a {
+            display: inline;
+            background: transparent;
+            color: #754e2e;
+            font-weight: 500;
+            text-decoration: none;
+            border-bottom: 2px solid #dbb28c;
+            padding: 0 0.15rem;
+            transition: background 0.15s, color 0.1s;
+            border-radius: 0;
+            font-size: 1rem;
+        }
+        .link-note a:hover {
+            background: #e7c9ae;
+            color: #2f1c0e;
+            border-bottom-color: #754e2e;
+        }
+
+        /* 小字号辅助卡片——FAQ摘要 */
+        .faq-mini {
+            background: #ffffffec;
+            border-radius: 28px;
+            padding: 1.8rem 2rem;
+            box-shadow: 0 6px 14px rgba(100, 55, 24, 0.05);
+            border: 1px solid #f3dac4;
+        }
+        .faq-mini h3 {
+            font-size: 1.1rem;
+            font-weight: 530;
+            color: #3f2a1a;
+            margin-bottom: 0.75rem;
+            letter-spacing: 0.02em;
+        }
+        .faq-item {
+            margin-bottom: 0.7rem;
+        }
+        .faq-item strong {
+            color: #4a2d18;
+            font-weight: 540;
+            display: block;
+            margin-bottom: 0.15rem;
+            font-size: 0.95rem;
+        }
+        .faq-item span {
+            color: #3e2c1d;
+            font-size: 0.9rem;
+            line-height: 1.5;
+        }
+
+        /* 响应式微调 */
+        @media (max-width: 600px) {
+            .hero-card {
+                padding: 2rem 1.5rem;
+            }
+            .hero-card h1 {
+                font-size: 1.9rem;
+            }
+            .info-card {
+                padding: 1.6rem 1.2rem;
+            }
+            .link-note {
+                padding: 1.5rem 1.2rem;
+            }
+            .faq-mini {
+                padding: 1.2rem 1.2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+<div class="page-wrapper">
+
+    <!-- 主视觉卡片 -->
+    <div class="hero-card">
+        <h1>日常对照 · <span>leisu</span></h1>
+        <p>一个用来查询、对照、延伸翻阅的地方。没有花哨的入口，只有安静的文本和索引。你随时可以打开，随手翻看几行，然后合上。</p>
+    </div>
+
+    <!-- 用途卡片 两栏网格 -->
+    <div class="card-grid">
+        <div class="info-card">
+            <h2>常备场景</h2>
+            <ul>
+                <li>快速检索某个条目，不做长篇解释</li>
+                <li>平行对照不同说法、不同来源的表述</li>
+                <li>从一条简短记录延伸至相关线索</li>
+                <li>标记或回顾曾经留意过的内容</li>
+            </ul>
+        </div>
+        <div class="info-card">
+            <h2>适合人群</h2>
+            <ul>
+                <li>习惯随手查阅、不喜欢弹窗和广告的人</li>
+                <li>需要简单、克制的信息陈列</li>
+                <li>对宽泛的概括感到厌倦，更倾向具体文本</li>
+                <li>像翻笔记本一样对待网页的人</li>
+            </ul>
+        </div>
+    </div>
+
+    <!-- 自然链接段落卡片（核心句子嵌入链接） -->
+    <div class="link-note">
+        <p>如果你只是想找一个干净的起点，不妨从 <a href="https://asia-china-leisu.com">leisu</a> 开始——它没有复杂的导航，更像一份随时可以摊开的短册。你可以把它当作日常的对照本，偶尔延伸出去，偶尔只读半句。</p>
+        <p>那里没有推送，没有弹窗，只有一行行等候被翻阅的文字。适合在下午或夜间，安静地打开，随手看几条。不需要注册，也不需要记住什么规则。</p>
+    </div>
+
+    <!-- FAQ 摘要卡片（克制、真实视角） -->
+    <div class="faq-mini">
+        <h3>一些零散的说明</h3>
+        <div class="faq-item">
+            <strong>里面收录了什么？</strong>
+            <span>以短条目、对照表、简短注释为主，不追求长篇大论。更像私人整理过的索引墙。</span>
+        </div>
+        <div class="faq-item">
+            <strong>更新频率高吗？</strong>
+            <span>不固定，有时隔几天，有时隔几周。内容稳定，不会突然变样。</span>
+        </div>
+        <div class="faq-item">
+            <strong>适合从头读到尾吗？</strong>
+            <span>更适合跳读、定位、对照。没有章节顺序，从哪里开始都可以。</span>
+        </div>
+    </div>
+
+    <!-- 极简分隔，无实质内容，仅视觉留白 -->
+    <div style="height: 0.4rem;"></div>
+</div>
+</body>
+</html>
